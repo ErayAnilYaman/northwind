@@ -2,6 +2,7 @@ import { Component, NgModule, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product';
 import {HttpClient} from '@angular/common/http'
 import { ProductResponseModule } from 'src/app/models/productResponseModule';
+import { ProductService } from 'src/app/services/product.service';
 // axios ,fetch
 @Component({
   selector: 'app-product',
@@ -11,10 +12,10 @@ import { ProductResponseModule } from 'src/app/models/productResponseModule';
 export class ProductComponent implements OnInit{
   
 
-  apiUrl = "https://localhost:44368/api/products/getall"
+  dataLoaded = false;
   products:Product[] = []
   
-  constructor(private httpClient:HttpClient){  }
+  constructor(private productService:ProductService){  }
 
   ngOnInit():void{
     console.log("Init calisti")
@@ -23,10 +24,9 @@ export class ProductComponent implements OnInit{
   }
   
   getProducts(){
-    this.httpClient
-    .get<ProductResponseModule>(this.apiUrl)
-    .subscribe((response)=>{
+    this.productService.getProducts().subscribe((response)=>{
       this.products = response.data
+      this.dataLoaded = true;
     });
   }
 }
