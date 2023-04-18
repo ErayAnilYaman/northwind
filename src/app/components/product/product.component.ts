@@ -1,8 +1,8 @@
 import { Component, NgModule, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product';
 import {HttpClient} from '@angular/common/http'
-import { ProductResponseModule } from 'src/app/models/productResponseModule';
 import { ProductService } from 'src/app/services/product.service';
+import { ActivatedRoute } from '@angular/router';
 // axios ,fetch
 @Component({
   selector: 'app-product',
@@ -11,15 +11,23 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ProductComponent implements OnInit{
   
-
   dataLoaded = false;
   products:Product[] = []
   
-  constructor(private productService:ProductService){  }
+  constructor(private productService:ProductService, private activatedRoute:ActivatedRoute){  }
 
   ngOnInit():void{
-    console.log("Init calisti")
-    this.getProducts();
+    
+    this.activatedRoute.params.subscribe(params=>{
+      if(params["categoryId"]){
+        this.getProductsByCategoryId(params["categoryId"])
+      }
+      else
+      {
+        this.getProducts()
+      }
+
+    })
 
   }
   
@@ -28,5 +36,11 @@ export class ProductComponent implements OnInit{
       this.products = response.data
       this.dataLoaded = true;
     });
+  }
+  getProductsByCategoryId(id:number){
+    this.productService.getProductsByCategoryId(id).subscribe((response=>{
+      this.products = response.data;
+      this.dataLoaded = true
+    }))
   }
 }

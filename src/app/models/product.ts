@@ -3,5 +3,5 @@ export interface Product{
     productName:string
     unitsInStock:number
     unitPrice:number
-    categoryName:string
+    categoryId:number
 }
