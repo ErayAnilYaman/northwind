@@ -1,3 +1,5 @@
+import { ToastrService } from 'ngx-toastr';
+import { CartService } from './../../services/cart.service';
 import { Component, NgModule, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product';
 import {HttpClient} from '@angular/common/http'
@@ -13,8 +15,10 @@ export class ProductComponent implements OnInit{
   
   dataLoaded = false;
   products:Product[] = []
+  filterText = "";
   
-  constructor(private productService:ProductService, private activatedRoute:ActivatedRoute){  }
+  constructor(private productService:ProductService, private activatedRoute:ActivatedRoute,
+    private toastrService:ToastrService, private cartService:CartService){  }
 
   ngOnInit():void{
     
@@ -43,4 +47,17 @@ export class ProductComponent implements OnInit{
       this.dataLoaded = true
     }))
   }
+  addToCart(product:Product){
+    if (product.productId !== 1) {
+      this.toastrService.success("Sepete Eklendi",product.productName);
+      this.cartService.addToCart(product);
+    }
+    
+    else{
+      this.toastrService.error("Sepete eklenemedi","Bu urun sepete eklenemedi");
+      
+    }
+  }
+  
+
 }

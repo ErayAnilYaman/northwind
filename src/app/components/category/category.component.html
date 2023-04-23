@@ -1,8 +1,8 @@
 <ul class="list-group">
-  <li (click) = "removeCurrentCategory(currentCategory)"(click)="setCurrentCategory(currentCategory)" class="list-group-item list-group-item-dark" routerLink="/products" style="font-size: larger;">Tum Urunler</li>
-    <li  (click)="setCurrentCategory(category)"
-    routerLink="/products/category/{{category.categoryId}}"
-     *ngFor="let category of categories"
-      [class]="getCurrentCategoryClass(category)"
-      >{{category.categoryName}}</li>
-</ul>
+  <li [class]="getAllCategoryClass()" >Tüm Kategoriler</li>
+    <li (click)="setCurrentCategory(category)" 
+    routerLink = "/products/category/{{category.categoryId}}"
+    *ngFor="let category of categories" 
+    [class]="getCurrentCategoryClass(category)">
+    {{category.categoryName}}</li> 
+  </ul>

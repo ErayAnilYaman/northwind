@@ -41,11 +41,6 @@ export class CategoryComponent implements OnInit {
   removeCategoryClass(category:Category){
     return "list-group-item"
   }
-  removeCurrentCategory(currentCategory:Category){
-    this.categories.forEach(category => {
-      this.currentCategory = category
-      this.removeCategoryClass(category)
-    });
-  }
+  
   
 }
